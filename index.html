@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Payment Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin: 20px 0;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      margin:10px;
+      background: #1abc9c;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #16a085;
+    }
+
+    #qrcode {
+      margin: 20px auto;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: twinkle 1s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.3;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <h1>✨ QR Code Payment Generator 💸</h1>
+  <p>Masukkan informasi pembayaran Anda dan klik tombol "Generate".</p>
+
+  <form id="paymentForm">
+    <input type="text" id="paymentInfo" placeholder="Masukkan data pembayaran (e.g., nomor rekening, link e-wallet)" required>
+    <button type="submit">Generate QR Code 🚀</button>
+  </form>
+
+  <div id="qrcode"></div>
+
+  <script>
+    const form = document.getElementById('paymentForm');
+    const qrcodeContainer = document.getElementById('qrcode');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const paymentInfo = document.getElementById('paymentInfo').value;
+
+      if (!paymentInfo) {
+        alert('Harap masukkan data pembayaran!');
+        return;
+      }
+
+      // Hapus QR Code sebelumnya
+      qrcodeContainer.innerHTML = '';
+
+      // Generate QR Code baru
+      new QRCode(qrcodeContainer, {
+        text: paymentInfo,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff"
+      });
+    });
+
+    // Generate efek bintang
+    const starContainer = document.querySelector('.stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      starContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
